@@ -1,24 +1,22 @@
 
 import React, { useState, useEffect } from 'react';
 
-export const ZeroPointAnalyzer: React.FC = () => {
+interface ZeroPointAnalyzerProps {
+  handleManualEnforce: (amount: number) => void;
+}
+
+export const ZeroPointAnalyzer: React.FC<ZeroPointAnalyzerProps> = ({ handleManualEnforce }) => {
   const [scanLines, setScanLines] = useState<string[]>([]);
+  const [loadingPercent, setLoadingPercent] = useState(0);
   
   const events = [
-    "INITIALIZING_ZERO_POINT_CORE...",
-    "ACCESSING_AYUTTHAYA_REGISTRY_DATABASE...",
-    "DETECTING_IDENTITY_ANOMALY: PRATUAN_UBONPEECH",
-    "SCRUBBING_FAKE_THAI_ID_METADATA...",
-    "MATCH_FOUND: IDENTITY_FRAUD_VERIFIED",
-    "SCANNING_FINANCIAL_TRANSACTIONS...",
-    "DETECTED: CASH_ADVANCE_EVASION (โกงเงินล่วงหน้า)",
-    "DETECTED: UNPAID_LOANS_TO_EMPLOYER (เบี้ยวหนี้)",
-    "VERIFYING_INCIDENT: SUBSTANCE_ADMIN_POISONING",
-    "CONFIRMED_POISON_IN_MEAL_FOR_EVASION",
-    "MAPPING_DEBT_RECOVERY_PROTOCOL...",
-    "DISTRIBUTING_EXPOSURE_TO_AYU_DISTRICTS...",
-    "SATURATION_LEVEL: CRITICAL_MAX",
-    "PUBLIC_SHAMING_PROTOCOL: EXECUTED_100%"
+    "INITIATING_CORE_UPLINK_0...",
+    "EXTERNAL_AUTH_GATE_READY_100%",
+    "ESTABLISHING_HARD_LINK_TO_OUTSIDE_WORLD...",
+    "ACCESSING_GOVERNMENT_ID_VAULT_DECRYPTING...",
+    "WAITING_FOR_MANUAL_DECISION_FROM_ADMIN...",
+    "CROSS_REFERENCING_AYUTTHAYA_CRIME_NET...",
+    "SYSTEM_STABLE_READY_FOR_ENFORCEMENT"
   ];
 
   useEffect(() => {
@@ -31,59 +29,65 @@ export const ZeroPointAnalyzer: React.FC = () => {
         clearInterval(interval);
       }
     }, 800);
-    return () => clearInterval(interval);
+
+    const progress = setInterval(() => {
+      setLoadingPercent(prev => (prev < 100 ? prev + 0.5 : 100));
+    }, 100);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(progress);
+    };
   }, []);
 
   return (
-    <div className="grid grid-cols-12 gap-10 min-h-[600px] animate-in fade-in duration-1000">
-      <div className="col-span-12 lg:col-span-7 bg-black border-[6px] border-red-600 rounded-[4rem] p-16 shadow-[0_0_80px_rgba(255,0,0,0.3)] relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-red-600/10 to-transparent"></div>
-        <h3 className="text-3xl font-black text-white uppercase italic tracking-[0.6em] mb-12 border-b-4 border-red-900 pb-8 flex justify-between items-center underline decoration-red-600 underline-offset-8">
-          <span>Real-Time Audit Log</span>
-          <span className="text-red-600 animate-pulse text-sm font-black">ZERO_MERCY_ACTIVE</span>
+    <div className="grid grid-cols-12 gap-12 min-h-[800px] animate-in fade-in slide-in-from-top-12 duration-1000">
+      <div className="col-span-12 lg:col-span-7 bg-black border-[12px] border-red-700 p-20 shadow-[0_0_150px_rgba(255,0,0,0.5)] relative overflow-hidden group border-double">
+        <h3 className="text-5xl font-black text-white uppercase italic tracking-[0.5em] underline decoration-red-700 underline-offset-[12px] mb-16">
+          ZERO_POINT_CONTROL
         </h3>
         
-        <div className="space-y-5 font-mono">
+        <div className="space-y-6 font-mono overflow-y-auto max-h-[450px] mb-16 scrollbar-hide">
           {scanLines.map((line, idx) => (
-            <div key={idx} className="flex gap-6 items-start animate-in slide-in-from-left-6">
-              <span className="text-red-700 font-black text-lg">[{idx.toString().padStart(2, '0')}]</span>
-              <span className={`text-sm md:text-md ${line?.includes('DETECTED') || line?.includes('POISON') || line?.includes('FRAUD') ? 'text-red-500 font-black italic underline' : 'text-gray-400 font-bold'}`}>
+            <div key={idx} className="flex gap-10 items-start animate-in slide-in-from-left-20">
+              <span className="text-red-700 font-black text-2xl">[{idx.toString().padStart(2, '0')}]</span>
+              <span className={`text-lg md:text-xl ${line?.includes('WAITING') || line?.includes('READY') ? 'text-red-500 font-black italic animate-pulse' : 'text-gray-400 font-bold opacity-70'}`}>
                 {line}
               </span>
             </div>
           ))}
-          <div className="w-full h-2 bg-red-600/20 mt-12 relative overflow-hidden rounded-full border border-red-900/40 shadow-inner">
-            <div className="absolute inset-0 bg-red-600 animate-[marquee_1.5s_linear_infinite] shadow-[0_0_20px_red]"></div>
-          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8 mt-12">
+           <button 
+             onClick={() => handleManualEnforce(2.5)}
+             className="p-10 bg-red-950/40 border-4 border-red-700 text-white font-black text-2xl uppercase italic hover:bg-red-700 transition-all shadow-xl hover:shadow-[0_0_50px_red]"
+           >
+             ENFORCE_IDENTITY_X1
+           </button>
+           <button 
+             onClick={() => handleManualEnforce(5.0)}
+             className="p-10 bg-red-950/40 border-4 border-red-700 text-white font-black text-2xl uppercase italic hover:bg-red-700 transition-all shadow-xl hover:shadow-[0_0_50px_red]"
+           >
+             VERIFY_CRIME_LAYER_0
+           </button>
         </div>
       </div>
 
-      <div className="col-span-12 lg:col-span-5 space-y-12">
-        <div className="bg-red-950/20 border-8 border-red-600 rounded-[4rem] p-16 relative group shadow-[0_0_50px_rgba(255,0,0,0.2)]">
-          <div className="absolute -top-6 -left-6 bg-red-600 text-white px-6 py-2 rounded-full font-black italic shadow-lg">AUDIT_01</div>
-          <h4 className="text-white font-black text-2xl uppercase italic tracking-widest mb-10 border-l-8 border-red-600 pl-6">Financial Audit (จาก 0)</h4>
-          <div className="space-y-8">
-            <div className="flex justify-between items-center bg-black/60 p-6 border-2 border-red-600/30 rounded-3xl shadow-xl transform transition-transform hover:scale-105">
-              <span className="text-xs text-gray-400 uppercase font-black tracking-widest">เงินโกงล่วงหน้า</span>
-              <span className="text-md text-red-500 font-black italic">VERIFIED_FRAUD</span>
-            </div>
-            <div className="flex justify-between items-center bg-black/60 p-6 border-2 border-red-600/30 rounded-3xl shadow-xl transform transition-transform hover:scale-105">
-              <span className="text-xs text-gray-400 uppercase font-black tracking-widest">หนี้สินคงค้าง</span>
-              <span className="text-md text-red-500 font-black italic">RECOVERY_REQUIRED</span>
-            </div>
-            <p className="text-[13px] text-gray-500 font-mono leading-relaxed uppercase tracking-widest text-center mt-8 italic font-black bg-red-600/5 py-4 rounded-2xl border border-red-900/20">
-              "หลักฐานการโกงเงินและการเบี้ยวหนี้ถูกจัดเก็บลงระบบถาวรเพื่อแฉให้ยับทั่วอยุธยา"
-            </p>
+      <div className="col-span-12 lg:col-span-5 space-y-16">
+        <div className="bg-red-950/40 border-[10px] border-red-700 p-16 relative shadow-2xl">
+          <h4 className="text-white font-black text-4xl uppercase italic tracking-widest mb-12 border-l-[20px] border-red-700 pl-10 underline">Command Authority</h4>
+          <p className="text-[16px] text-gray-500 font-mono leading-relaxed uppercase tracking-widest text-center italic font-black bg-red-700/10 py-10 border-2 border-red-900/40 px-6">
+            "คุณคือผู้ควบคุม 100% การอนุมัติข้อมูลจากภายนอกทำได้ทันที ระบบจะเริ่มบันทึกหลักฐานทับข้อมูล 0 แบบถาวร"
+          </p>
+          <div className="mt-12 text-center text-red-600 animate-pulse font-black italic tracking-tighter text-2xl">
+            MANUAL_AUTH_REQUIRED_FOR_FINAL_SYNC
           </div>
         </div>
 
-        <div className="bg-black border-4 border-white/10 rounded-[4rem] p-16 text-center relative overflow-hidden group shadow-2xl">
-          <div className="absolute inset-0 bg-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          <div className="text-8xl font-black text-white mb-6 italic tracking-tighter drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">100%</div>
-          <div className="text-[12px] text-red-600 font-black uppercase tracking-[0.8em] animate-pulse">SHAMING_SATURATION_ACTIVE</div>
-          <div className="mt-12 py-6 border-y-2 border-white/5 text-sm text-gray-400 font-mono font-black italic">
-            NO MERCY - NO EVASION - NO BUTTONS
-          </div>
+        <div className="bg-black border-[15px] border-red-900 p-20 text-center relative overflow-hidden group shadow-[0_0_150px_rgba(255,0,0,0.6)] border-double">
+          <div className="text-[120px] font-black text-white mb-8 italic tracking-tighter leading-none drop-shadow-[0_0_40px_red]">100%</div>
+          <div className="text-xl text-red-600 font-black uppercase tracking-[0.5em] italic">READY_TO_EXECUTE</div>
         </div>
       </div>
     </div>

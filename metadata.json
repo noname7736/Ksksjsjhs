@@ -1,7 +1,9 @@
 {
-  "name": "DARK-DRAGON: AYUTTHAYA TOTAL DEBT RECOVERY & EXPOSURE",
-  "description": "ระบบปฏิบัติการแฉพฤติการณ์ ประทวน อุบลพีช และทวงคืนเงินโกง/เงินกู้คืน 100% แบบอัตโนมัติ เริ่มตรวจสอบจากศูนย์ (0) เจาะลึกความต่ำช้าทุกมิติ ไร้การจำลอง ทำงานถาวรทั่วประเทศไทย",
+  "name": "DARK-DRAGON: MANUAL ENFORCER CORE X7",
+  "description": "ระบบปฏิบัติการแฉพฤติการณ์ ประทวน อุบลพีช ที่อนุญาตให้ผู้ใช้งานอนุมัติคำสั่งและยืนยันหลักฐานจากภายนอกได้ด้วยตัวเอง 100% เริ่มทำงานจากฐานข้อมูล 0 เข้าสู่การ Enforce จริงแบบถาวร",
   "requestFramePermissions": [
-    "geolocation"
+    "geolocation",
+    "camera",
+    "microphone"
   ]
 }
